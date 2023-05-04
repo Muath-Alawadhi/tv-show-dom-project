@@ -93,8 +93,37 @@ function makePageForEpisodes(episodeList) {
     }/${users.length}`;
   }
 
+  /////////////Select/////////////////
+  let select = document.createElement("select");
+  select.className = "select";
+  search.appendChild(select);
 
+  let defaultOption = document.createElement("option");
+  defaultOption.text = "Select an episode...";
+  defaultOption.disabled = false
+  select.appendChild(defaultOption);
+
+  episodeList.forEach((user) => {
+    defaultOption.disabled = true
+
+    let option = document.createElement("option");
+    option.className = "option";
+    option.value = user.name;
+    option.innerHTML = ` S0${user.season}E0${user.number}- ${user.name}`;
+    select.appendChild(option);
+  });
+  select.addEventListener("change", function () {
+    const selectedOption = select.value;
+
+    users.forEach((user) => {
+      if (user.name === selectedOption) {
+        user.element.style.display = "block";
+      } else {
+        user.element.style.display = "none";
+      }
+    });
+  });
 }
+
+
 window.onload = setup;
-
-
