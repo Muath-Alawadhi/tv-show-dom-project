@@ -1,6 +1,9 @@
 function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
+
+  const allShows = getAllShows();
+  makePageForShow(allShows);
 }
 
 function makePageForEpisodes(episodeList) {
@@ -8,7 +11,7 @@ function makePageForEpisodes(episodeList) {
   let container = document.createElement("div");
   container.className = "container";
 
-  //////////////////////User search(1) //////////////////
+  //////////////////////User search(1) /////////////////
 
   let search = document.createElement("div");
   search.className = "search";
@@ -35,7 +38,7 @@ function makePageForEpisodes(episodeList) {
   searchTools.appendChild(searchInput);
   search.appendChild(searchDetails);
 
-  //////////////////////calling  /////////////////
+  //////////////////////calling the element /////////////////
 
   let users = episodeList.map((eachEpisode) => {
     let details = document.createElement("div");
@@ -49,6 +52,7 @@ function makePageForEpisodes(episodeList) {
     titles.innerHTML = `${eachEpisode.name}- S${eachEpisode.season
       .toString()
       .padStart(2, "0")}E${eachEpisode.number.toString().padStart(2, "0")}`;
+    // titles.innerHTML = `${eachEpisode.name}- S0${eachEpisode.season}E0${eachEpisode.number}`;
 
     let images = document.createElement("img");
     images.className = "images";
@@ -100,11 +104,11 @@ function makePageForEpisodes(episodeList) {
 
   let defaultOption = document.createElement("option");
   defaultOption.text = "Select an episode...";
-  defaultOption.disabled = false
+  defaultOption.className = "defaultOption";
   select.appendChild(defaultOption);
 
   episodeList.forEach((user) => {
-    defaultOption.disabled = true
+    defaultOption.disabled = true;
 
     let option = document.createElement("option");
     option.className = "option";
@@ -123,7 +127,44 @@ function makePageForEpisodes(episodeList) {
       }
     });
   });
+
+  ///filter button ////////
 }
 
+function makePageForShow(allShows) {
+  let search = document.querySelector(".search");
+  let selectForShow = document.createElement("select");
+  selectForShow.className = "selectForShow";
+
+  let defaultOption = document.createElement("option");
+  defaultOption.innerHTML = "select your show....!";
+  defaultOption.selected = true;
+  defaultOption.disabled = true;
+
+  search.appendChild(selectForShow);
+  selectForShow.appendChild(defaultOption);
+
+  allShows.forEach((element) => {
+    let optionForShow = document.createElement("option");
+    optionForShow.value = element.id;
+    optionForShow.innerHTML = element.name;
+    selectForShow.appendChild(optionForShow);
+  });
+
+  selectForShow.addEventListener("change", getThid);
+  function getThid(event) {
+    let number = event.target.value;
+    let url = `http://api.tvmaze.com/shows/${number}/episodes`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        makePageForEpisodes(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching episodes:", error);
+      });
+  }
+}
 
 window.onload = setup;
+
