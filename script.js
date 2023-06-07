@@ -36,6 +36,7 @@ search.appendChild(searchTools);
 let users;
 function printAllEpisodes(allEpisodes) {
   container.innerHTML = "";
+  allEpisodes.sort((a, b) => a.name.localeCompare(b.name));
   //////loop through the Episodes////////
   users = allEpisodes.map((eachEpisode) => {
     const details = document.createElement("div");
@@ -160,6 +161,7 @@ function uerSelect(allEpisodes) {
 /* _____________________(6)Select allShows User's function____________________  */
 
 function makePageForShow(allShows) {
+  allShows.sort((a, b) => a.name.localeCompare(b.name));
   const search = document.querySelector(".search");
   const selectForShow = document.createElement("select");
   selectForShow.className = "selectForShow";
