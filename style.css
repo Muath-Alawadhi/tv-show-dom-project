@@ -175,7 +175,9 @@ body {
   outline: none;
   font-size: 18px;
   width: 30vh;
-  color: rgba(255, 255, 255, 0.659);
+  color: rgba(24, 2, 2, 0.659);
+  font-weight: bold;
+
 }
 
 .searchDetails {
@@ -262,6 +264,24 @@ input::placeholder {
 }
 
 .option {
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #7593afba;
+}
+
+.selectForShow {
+  padding: 12px 10px;
+  background-color: #cbd4dede;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 40px;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  right: 16rem;
+  width: 37vh;
+}
+.optionForShow{
   font-size: 15px;
   font-weight: bold;
   background-color: #7593afba;
